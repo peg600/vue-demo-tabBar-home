@@ -1,11 +1,11 @@
 <template>
   <div class="wrapper">
     <div class="content">
-      <navBar ></navBar>
+      <navBar :dpr="dpr"></navBar>
       <div class="main">
       </div>
     </div>
-    <buttons ></buttons>
+    <buttons :dpr="dpr"></buttons>
     <tabBar :items="items" :showList="showList" ></tabBar>
   </div>
 
@@ -21,10 +21,10 @@ export default {
   name: 'App',
   data() {
     return {
-
+      dpr:1,
       items:{},
       response:{},
-      showList:true
+      showList:false
     }
   },
   created() {
@@ -32,6 +32,7 @@ export default {
       response = response.data;
       this.items = response.items;
     });
+    this.dpr=window.devicePixelRatio;
   },
   methods:{
 

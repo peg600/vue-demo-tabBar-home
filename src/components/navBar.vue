@@ -24,14 +24,15 @@
     export default {
       name: "navBar",
       props:{
-
+        dpr: {
+          type:Number
+        },
         showList: {
           type: Boolean
         }
       },
       data() {
         return {
-          dpr:1,
           all: require("./全部@2x.png"),
           recommend:require("./推荐@2x.png"),
           change:require("./换一批@2x.png"),
@@ -40,7 +41,7 @@
         }
       },
       created() {
-        if(dpr>2) {
+        if(this.dpr>2) {
           this.all = require("./全部@3x.png");
           this.recommend = require("./推荐@3x.png");
           this.change = require("./换一批@3x.png");
