@@ -1,0 +1,26 @@
+{
+  "list": {
+    "2": {
+      "id":"2",
+      "name":"眼镜",
+      "cat_image":"\/server\/data\/attached\/images\/no_picture.gif",
+      "url":"\/server\/index.php?m=default&c=category&a=index&id=2&u=0"},
+    "3":{
+      "id":"3",
+      "name":"帽子",
+      "cat_image":"\/server\/data\/attached\/images\/no_picture.gif",
+      "url":"\/server\/index.php?m=default&c=category&a=index&id=3&u=0"},
+    "4":{
+      "id":"4",
+      "name":"彩妆",
+      "cat_image":"\/server\/data\/attached\/images\/no_picture.gif",
+      "url":"\/server\/index.php?m=default&c=category&a=index&id=4&u=0"},
+    "5":{
+      "id":"5",
+      "name":"耳饰",
+      "cat_image":"\/server\/data\/attached\/images\/no_picture.gif",
+      "url":"\/server\/index.php?m=default&c=category&a=index&id=5&u=0"
+    }
+  }
+}
+
