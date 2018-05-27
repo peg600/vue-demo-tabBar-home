@@ -28,15 +28,21 @@ export default {
     }
   },
   created() {
-    axios.get("../static/test.json").then((response) => {      //@touchmove.prevent
+    axios.get("../static/standard1.json").then((response) => {      //@touchmove.prevent
       response = response.data;
-      this.items = response.items;
+      this.items = response.list;
+      console.log(this.items)
     });
     this.dpr=window.devicePixelRatio;
   },
   methods:{
     showList() {
       this.show = true;
+      axios.get("../static/standard1.json").then((response) => {      //@touchmove.prevent
+        response = response.data;
+        this.items = response.list;
+        console.log(this.items)
+      });
     },
     hideList() {
       this.show = false;

@@ -5,25 +5,35 @@
         <li class="clear">
           <img  class="img-clear" :src="dsr>2 ? require('./关闭(1)@2x.png') : require('./关闭(1)@3x.png')">
         </li>
-        <li class="item" @click="showItemList($event,item_message)">
-          热销
-        </li>
-        <li class="item" :class="{'active-item': activeType === item_message.message.type}" v-for="(item_message,item,index) in items"
+        <li class="item" :class="{'active-item': activeType === item_message.id}" v-for="(item_message,item,index) in items"
             @click="showItemList($event,item_message,index)">
           <div class="item-content">
-            <span class="item-name" >{{item_message.message.name}}</span>
-              <!--<img class="item-avatar" v-if="item_message.message.avatar"
-                   :src="item_message.message.avatar" height="20px" width="20px"> -->
+            <span class="item-name" >{{item_message.name}}</span>
           </div>
         </li>
       </ul>
     </div>
-    <list :items="items" :listWidth="listWidth" :screenWidth="screenWidth" :fullWidth="fullWidth" ref="list" @touchmove.prevent></list>
+    <div class="goods-content">
+      <div class="goods-wrapper" ref="outWrapper">
+        <div class="goods-type-wrapper" ref="innerWrapper" :style="this.listWidth">
+          <div class="goods-type" v-for="(item_message,item_id,index) in items" ref="goodsType" :style="screenWidth">
+            <ul class="goods-list" :class="item_id">
+              <li class="goods-item" v-for="(goods,index) in item_message.goods">
+                <a class="goods-link">
+                  <!--<span class="item-name">{{item.name}}</span>-->
+                  <img :src="goods.avatar" alt="item.name" class="item-img"
+                       height="75px" width="75px" >
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
   import BScroll from "better-scroll"
-  import list from "./list.vue"
 
   export default {
     name: "tabBar",
@@ -40,7 +50,7 @@
     },
     data() {
       return {
-        activeType:0,
+        activeType:1,
         itemMessage:{},
         listWidth:"",
         screenWidth:"",
@@ -79,13 +89,22 @@
             } else {
               this.itemScroll.refresh();
             }
+            if (!this.goodsScroll) {
+              this.goodsScroll = new BScroll(this.$refs.outWrapper, {
+                preventDefault: true,
+                scrollX: true,
+                scrollY:true
+              });
+            } else {
+              this.goodsScroll.refresh();
+            }
           });
         }
       },
 
       showItemList(e,item_message,index) {
-        this.itemMessage = item_message;
-        this.activeType = item_message.message.type;
+
+        this.activeType = item_message.id;
         let ulList = this.$refs.list.$refs.innerWrapper;
         let el = ulList.children[index];
         this.$refs.list.itemScroll(el);
@@ -95,7 +114,7 @@
 
       /*
       showItemList(e,item_message) {
-        //if(this.activeType && this.activeType === item_message.message.type) {
+        //if(this.activeType && this.activeType === item_message.id) {
           //this.showList = false;           // 若点击的是展示状态的tab，则取消展示状态并收起列表
           //this.activeType = 0;
           //this.itemMessage = {};
@@ -103,7 +122,7 @@
           //this.$refs.tabWrapper.style.height = 50+"px";
           //console.log(this.itemMessage,this.showList,this.activeType);
         //}else{                              // 若点击非展示状态的tab，将其标记为展示中并弹出列表
-          this.activeType = item_message.message.type;
+          this.activeType = item_message.id;
           //this.showList = true;
           this.itemMessage = item_message;// 准备将itemMessage传给list组件
           this.$emit("show-list");
@@ -113,7 +132,7 @@
       }*/
     },
     components:{
-      list
+
     }
   }
 </script>
@@ -186,4 +205,47 @@
   .active-item{
     color: rgb(255,189,69);
   }
+
+
+  .goods-content {
+    overflow: hidden;
+  }
+
+  .goods-wrapper {
+    position: absolute;
+    width: 100%;
+    top: 40px;
+    bottom: 0;
+    overflow: hidden;
+    font-size: 0;
+    border-top: 2px solid rgba(242,242,242,.15);
+    box-sizing: border-box;
+    background-color: rgba(0,0,0,.3);
+  }
+
+  .goods-type-wrapper {
+
+  }
+
+  .goods-type {
+    display: inline-block;
+    width: 375px;
+    min-height: 188px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .goods-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+  }
+
+  .goods-item {
+    text-align: center;
+    list-style-type: none;
+    flex: 0 75px;
+  }
+
 </style>

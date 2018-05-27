@@ -48,6 +48,10 @@
         }
       },
 
+      created() {
+
+      },
+
       watch: {
         "items"() {
           this.$nextTick(() => {

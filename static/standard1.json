@@ -1,5 +1,10 @@
 {
   "list": {
+    "1": {
+      "id":"1",
+      "name":"热销",
+      "cat_image":"\/server\/data\/attached\/images\/no_picture.gif",
+      "url":"\/server\/index.php?m=default&c=category&a=index&id=2&u=0"},
     "2": {
       "id":"2",
       "name":"眼镜",
@@ -20,7 +25,13 @@
       "name":"耳饰",
       "cat_image":"\/server\/data\/attached\/images\/no_picture.gif",
       "url":"\/server\/index.php?m=default&c=category&a=index&id=5&u=0"
-    }
+    },
+    "6":{
+    "id":"6",
+    "name":"鞋",
+    "cat_image":"\/server\/data\/attached\/images\/no_picture.gif",
+    "url":"\/server\/index.php?m=default&c=category&a=index&id=5&u=0"
+  }
   }
 }
 
