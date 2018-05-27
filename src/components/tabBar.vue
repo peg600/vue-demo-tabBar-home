@@ -9,7 +9,7 @@
           热销
         </li>
         <li class="item" :class="{'active-item': activeType === item_message.message.type}" v-for="(item_message,item,index) in items"
-            @click="showItemList($event,item_message)">
+            @click="showItemList($event,item_message,index)">
           <div class="item-content">
             <span class="item-name" >{{item_message.message.name}}</span>
               <!--<img class="item-avatar" v-if="item_message.message.avatar"
@@ -18,7 +18,7 @@
         </li>
       </ul>
     </div>
-    <list :itemMessage="itemMessage" @touchmove.prevent></list>
+    <list :items="items" :listWidth="listWidth" :screenWidth="screenWidth" :fullWidth="fullWidth" ref="list" @touchmove.prevent></list>
   </div>
 </template>
 <script>
@@ -41,7 +41,10 @@
     data() {
       return {
         activeType:0,
-        itemMessage:{}
+        itemMessage:{},
+        listWidth:"",
+        screenWidth:"",
+        fullWidth:0
       }
     },
     watch: {
@@ -60,11 +63,12 @@
       _initScroll() {
         if (this.items) {
           let itemsArray = Object.keys(this.items);
-          /*let screenWidth = document.body.scrollWidth;
-          let margin = 6;
-          let itemWidth = (screenWidth-2*margin)/4;*/
+          this.fullWidth = document.body.scrollWidth;
+          this.screenWidth = `width: ${document.body.scrollWidth}px;`;
           let width = 67 * (itemsArray.length+1) + 40;    // 计算所有图片总宽度，即ul宽度
           this.$refs.itemList.style.width = width + "px";    // 为图片列表设置宽度，只有宽度大于容器才能滚动
+          this.listWidth = `width: ${this.fullWidth * (itemsArray.length+1)}px`;
+          console.log(this.listWidth);
           this.$nextTick(() => {
             if (!this.itemScroll) {
               this.itemScroll = new BScroll(this.$refs.itemWrapper, {
@@ -79,9 +83,12 @@
         }
       },
 
-      showItemList(e,item_message) {
+      showItemList(e,item_message,index) {
         this.itemMessage = item_message;
         this.activeType = item_message.message.type;
+        let ulList = this.$refs.list.$refs.innerWrapper;
+        let el = ulList.children[index];
+        this.$refs.list.itemScroll(el);
       }
 
 
