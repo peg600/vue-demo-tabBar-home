@@ -1,7 +1,7 @@
 <template>
-    <div class="wrapper">
-      <div class="content">
-        <div class="classify">
+    <div class="btn-wrapper" v-show="!show">
+      <div class="btn-content">
+        <div class="classify" @click="btnShowList">
           <img src="./分类@2x.png" height="23" class="pic-up">
           <img src="./分类-字@2x.png" height="13">
         </div>
@@ -22,6 +22,9 @@
       props: {
         dpr:{
           type:Number
+        },
+        show:{
+          type:Boolean
         }
       },
       data() {
@@ -38,6 +41,11 @@
             word:"./购物车-字.@2x.png"
           }
         }
+      },
+      methods:{
+        btnShowList() {
+          this.$emit("show-list")
+        }
       }
     }
 </script>
@@ -49,17 +57,16 @@
     margin: auto;
   }
 
-  .wrapper {
+  .btn-wrapper {
     position: fixed;
     bottom: 0;
     width: 100%;
     height: 110px;
     box-sizing: border-box;
     z-index: 30;
-    background-color: rgba(12,76,212,.2);
   }
 
-  .content {
+  .btn-content {
     position: absolute;
     flex-direction: row;
     justify-content: center;
@@ -67,7 +74,6 @@
     top: 0;
     bottom: 50px;
     text-align: center;
-    background-color: aqua;
   }
 
   .classify {
@@ -77,7 +83,6 @@
     margin-top: 9px;
     margin-bottom: 10px;
     margin-right: 60px;
-    background-color: crimson;
   }
 
   .camera {
@@ -85,7 +90,6 @@
     vertical-align: bottom;
     width: 60px;
     height: 60px;
-    background-color: darkblue;
   }
 
   .shopcart {
@@ -95,7 +99,6 @@
     margin-top: 9px;
     margin-bottom: 10px;
     margin-left: 60px;
-    background-color: darkseagreen;
   }
 
   .pic-up {

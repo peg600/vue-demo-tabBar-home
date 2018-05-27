@@ -1,12 +1,12 @@
 <template>
   <div class="wrapper">
     <div class="content">
-      <navBar :dpr="dpr"></navBar>
+      <navBar :dpr="dpr" @show-list="showList" :show="show"></navBar>
       <div class="main">
       </div>
     </div>
-    <buttons :dpr="dpr"></buttons>
-    <tabBar :items="items" :showList="showList" ></tabBar>
+    <buttons :dpr="dpr" @show-list="showList" :show="show"></buttons>
+    <tabBar :items="items" :show="show" ></tabBar>
   </div>
 
 </template>
@@ -24,7 +24,7 @@ export default {
       dpr:1,
       items:{},
       response:{},
-      showList:false
+      show:false
     }
   },
   created() {
@@ -35,7 +35,12 @@ export default {
     this.dpr=window.devicePixelRatio;
   },
   methods:{
-
+    showList() {
+      this.show = true;
+    },
+    hideList() {
+      this.show = false;
+    }
   },
   components:{
     navBar,
@@ -53,7 +58,7 @@ html,body {
   padding: 0;
   overflow: hidden;
   box-sizing: border-box;
-  background-color: rgba(123,255,255,.2);
+  background-image: url("./background.jpg");
 }
 
 .wrapper {
@@ -77,7 +82,6 @@ html,body {
   width: 100%;
   overflow: auto;
   z-index: 5;
-  background-color: rgba(184,165,212,.2);
 }
 
 

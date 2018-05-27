@@ -1,12 +1,12 @@
 <template>
-  <div class="list-content">
-    <div class="wrapper" ref="outWrapper">
-      <ul class="list-wrapper">
-        <li class="list-item" v-for="(item,index) in itemMessage.goods" ref="listItem">
-          <a class="content">
-            <span class="item-name">{{item.name}}</span>
+  <div class="goods-content">
+    <div class="goods-wrapper" ref="outWrapper">
+      <ul class="goods-list">
+        <li class="goods-item" v-for="(item,index) in itemMessage.goods" ref="listItem">
+          <a class="goods-link">
+            <!--<span class="item-name">{{item.name}}</span>-->
             <img :src="item.avatar" alt="item.name" class="item-img"
-            height="30px" width="30px" >
+            height="75px" width="75px" >
           </a>
         </li>
       </ul>
@@ -24,8 +24,13 @@
         itemMessage:{
           type:Object
         },
-        showList:{
+        show:{
           type:Boolean
+        }
+      },
+      data() {
+        return {
+          selected:{}
         }
       },
 
@@ -48,6 +53,7 @@
             if (!this.scroll) {
               this.scroll = new BScroll(this.$refs.outWrapper, {
                 preventDefault: true,
+                scrollX:true,
                 scrollY:true,
               });
             } else {
@@ -55,38 +61,43 @@
             }
           })
         },
+
+        initSelected() {
+
+        }
       }
     }
 </script>
 
 <style scoped>
 
-  .list-content {
+  .goods-content {
     overflow: hidden;
   }
 
-  .wrapper {
+  .goods-wrapper {
     position: absolute;
     width: 100%;
-    top: 50px;
+    top: 40px;
     bottom: 0;
     overflow: hidden;
+    font-size: 0;
+    border-top: 2px solid rgba(242,242,242,.15);
     box-sizing: border-box;
-    background-color: rgba(145,145,145,.2);
+    background-color: rgba(0,0,0,.3);
   }
 
-  .list-wrapper {
+  .goods-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 0 10px;
+    margin: 0;
+    padding: 0;
   }
 
-  .list-item {
+  .goods-item {
     text-align: center;
     list-style-type: none;
-    flex: 1 1 33.33%;
-    padding-bottom: 30px;
+    flex: 0 75px;
   }
 
 
