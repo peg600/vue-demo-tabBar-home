@@ -4,8 +4,7 @@
         <ul class="nav-list">
           <li class="nav-item" v-for="(navImg,nav,index) in navData" @click="navShowList(navImg,nav,index)">
             <img class="pic" :src="dpr>2 ? navImg.img2x : navImg.img3x" >
-            <img class="dot" :src="dpr>2 ? currentDot.img2x : currentDot.img3x"
-            v-show="currentNav===nav">
+            <img class="dot" :src="dpr>2 ? currentDot.img2x : currentDot.img3x" v-show="currentNav===nav">
           </li>
         </ul>
       </div>

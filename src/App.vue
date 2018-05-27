@@ -6,7 +6,7 @@
       </div>
     </div>
     <buttons :dpr="dpr" @show-list="showList" :show="show"></buttons>
-    <tabBar :items="items" :show="show" ></tabBar>
+    <tabBar :items="items" :show="show" :listArray="listArray"></tabBar>
   </div>
 
 </template>
@@ -24,30 +24,47 @@ export default {
       dpr:1,
       items:{},
       response:{},
-      show:false
+      show:false,
+      listArray:[]
     }
   },
+
   created() {
     axios.get("../static/standard1.json").then((response) => {      //@touchmove.prevent
       response = response.data;
       this.items = response.list;
-      console.log(this.items)
     });
     this.dpr=window.devicePixelRatio;
+
   },
+
+  mounted() {
+
+  },
+
   methods:{
     showList() {
       this.show = true;
-      axios.get("../static/standard1.json").then((response) => {      //@touchmove.prevent
-        response = response.data;
-        this.items = response.list;
-        console.log(this.items)
-      });
+      let address = "";
+      let itemsAddress = Object.keys(this.items);
+      let length = itemsAddress.length;
+      for (let i = 1;i<length+1;i++) {
+        address = `../static/${i}.json`;
+        axios.get(address).then((response) => {
+          if (response) {
+            response = response.data.list;
+            this.listArray[i] = response;
+          }
+        });
+      }
+
+
     },
     hideList() {
       this.show = false;
     }
   },
+
   components:{
     navBar,
     buttons,

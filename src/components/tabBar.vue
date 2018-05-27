@@ -16,12 +16,12 @@
     <div class="goods-content">
       <div class="goods-wrapper" ref="outWrapper">
         <div class="goods-type-wrapper" ref="innerWrapper" :style="this.listWidth">
-          <div class="goods-type" v-for="(item_message,item_id,index) in items" ref="goodsType" :style="screenWidth">
+          <div class="goods-type" v-for="(item_message,item_id,index) in items" ref="goodsType" :style="screenWidth" >
             <ul class="goods-list" :class="item_id">
-              <li class="goods-item" v-for="(goods,index) in item_message.goods">
+              <li class="goods-item" v-for="goods in listArray[index+1]" @click="selectitem($event,goods,index)">
                 <a class="goods-link">
                   <!--<span class="item-name">{{item.name}}</span>-->
-                  <img :src="goods.avatar" alt="item.name" class="item-img"
+                  <img :src="goods.goods_thumb" alt="item.name" class="item-img"
                        height="75px" width="75px" >
                 </a>
               </li>
@@ -46,6 +46,9 @@
       },
       dsr:{
         type:Number
+      },
+      listArray:{
+        type:Array
       }
     },
     data() {
@@ -54,7 +57,8 @@
         itemMessage:{},
         listWidth:"",
         screenWidth:"",
-        fullWidth:0
+        fullWidth:0,
+        selected:[]
       }
     },
     watch: {
@@ -78,7 +82,6 @@
           let width = 67 * (itemsArray.length+1) + 40;    // 计算所有图片总宽度，即ul宽度
           this.$refs.itemList.style.width = width + "px";    // 为图片列表设置宽度，只有宽度大于容器才能滚动
           this.listWidth = `width: ${this.fullWidth * (itemsArray.length+1)}px`;
-          console.log(this.listWidth);
           this.$nextTick(() => {
             if (!this.itemScroll) {
               this.itemScroll = new BScroll(this.$refs.itemWrapper, {
@@ -103,14 +106,24 @@
       },
 
       showItemList(e,item_message,index) {
-
         this.activeType = item_message.id;
-        let ulList = this.$refs.list.$refs.innerWrapper;
-        let el = ulList.children[index];
-        this.$refs.list.itemScroll(el);
+        let goodsList = this.$refs.goodsType;
+        let el = goodsList[index];
+        this.goodsScroll.scrollToElement(el,300);
+      },
+
+      selectitem(e) {
+        console.log(123);
+        if(this.select[index+1]===goods.id) {
+          this.select[index+1] = null;
+          e.target.setAttribute("class","goods-item");
+
+        }else{
+          this.selected[index+1] = goods.id;
+          e.target.setAttribute("class","goods-item selected-item");
+          console.log(this.selected)
+        }
       }
-
-
 
       /*
       showItemList(e,item_message) {
@@ -246,6 +259,11 @@
     text-align: center;
     list-style-type: none;
     flex: 0 75px;
+  }
+
+  .selected-item {
+    border-radius: 10px;
+    border: 2px solid rgb(255,189,69);
   }
 
 </style>
